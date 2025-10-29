@@ -1,0 +1,5 @@
+Risk_Tier,call+coupon,email,none,sms,sms+coupon
+High,853,2,0,1,4
+Low,45,7,6,17,716
+Medium,1171,0,2,5,3
+nan,178,453,410,336,80
