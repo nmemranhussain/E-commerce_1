@@ -21,27 +21,22 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 **Engineered Features:** Year, Month, Day, Hour, DayOfWeek, IsWeekend, TotalAmount, BasketUniqueItems, CustProductDiversity, CustTotalSales, and Churn_Label
 **Data Source:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/352/online+retail)
 
-### Splitting the Data for logistic regression model
-The dataset was divided into training and validation data as follows:
-- **Training Data Split:** 80%
-- **Validation Data Split:** 20%
-
 ### Data Dictionary
 
-| Column Name     | Modeling Role  | Measurement Level | Description                            |
-|-----------------|----------------|-------------------|----------------------------------------|
-| PassengerId     | Identifier     | Nominal           | Unique ID for each passenger           |
-| Survived        | Target         | Binary            | 1 if the passenger survived, 0 otherwise|
-| Pclass          | Feature        | Ordinal           | Passenger class (1st, 2nd, 3rd)        |
-| Name            | Feature        | Nominal           | Name of the passenger                  |
-| Sex             | Feature        | Nominal           | Gender of the passenger (Male/Female)  |
-| Age             | Feature        | Continuous        | Age of the passenger                   |
-| SibSp           | Feature        | Continuous        | Number of siblings/spouses aboard      |
-| Parch           | Feature        | Continuous        | Number of parents/children aboard      |
-| Ticket          | Feature        | Nominal           | Ticket number                          |
-| Fare            | Feature        | Continuous        | Fare paid by the passenger             |
-| Cabin           | Feature        | Nominal           | Cabin number                           |
-| Embarked        | Feature        | Nominal           | Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton) |
+|Column Name	      |Modeling Role	|Measurement Level	|Description|
+|------------------|--------------|------------------|-----------|
+|CustomerID	       | ID	          |Nominal	          |Unique identifier assigned to each customer.|
+|Recency	          |Input	        |Interval	         |Number of days since the customer's last purchase relative to the dataset's reference date.|
+|Frequency	        |Input	        |Ratio	            |Total number of unique purchase transactions (invoices) made by the customer.|
+|Monetary	         |Input	        |Ratio	            |Total financial value of all successful purchases made by the customer.|
+|Churn_Label	 |Target	|Binary	|Classification where 1 indicates a "Churned" customer (inactive for >30 days) and 0 indicates "Not Churned".|
+|Country	|Input	|Nominal	|The country where the customer resides; used to analyze regional sales distribution.|
+|TotalAmount	|Input	|Ratio	|The calculated value of an individual transaction (Quantity × UnitPrice).|
+|BasketUniqueItems	|Input	|Ratio	|The number of distinct products contained within a single invoice.|
+|CustProductDiversity	|Input	|Ratio	|Total number of unique StockCodes purchased by a customer over their lifetime.|
+|IsWeekend	| Input	|Binary	|Flag indicating if a transaction occurred on a Saturday or Sunday.|
+|Estimated_Reward	|Output	|Ratio	|The projected financial Return on Investment (ROI) for a specific retention action.|
+|Chosen_Action|	Input	|Nominal	|The specific retention strategy (e.g., 'sms', 'email', 'call+coupon') recommended for the customer.|
 
 ## Test Data
 
