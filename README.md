@@ -19,7 +19,7 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 **Number of Samples:** The original dataset contains 541,909 rows. After the cleaning process—which includes removing duplicates and missing values—the notebook works with a processed set of 401,604 transactions.
 **Features Used:** InvoiceNo, StockCode, Description, Quantity, InvoiceDate, UnitPrice, CustomerID, and Country
 **Engineered Features:** Year, Month, Day, Hour, DayOfWeek, IsWeekend, TotalAmount, BasketUniqueItems, CustProductDiversity, CustTotalSales, and Churn_Label
-**Data Source:** [UCI Machine Learning Repository](https://www.kaggle.com/c/titanic/data?select=train.csv](https://archive.ics.uci.edu/dataset/352/online+retail))
+**Data Source:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/352/online+retail)
 
 ### Splitting the Data for logistic regression model
 The dataset was divided into training and validation data as follows:
