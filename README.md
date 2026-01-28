@@ -1,6 +1,6 @@
 # E-commerce Churn Prevention System
 
-Analyze Titanic passenger data with Logistic Regression &amp; Random Forest. Identify key factors influencing survival.
+This project builds an end-to-end e-commerce analytics and AI-driven decision support system. It converts raw transaction data into customer-level insights using feature engineering and churn modeling, evaluates retention strategies through expected value analysis, and enables natural-language access to insights via a Retrieval-Augmented Generation (RAG) interface. The system helps business teams identify at-risk customers, prioritize retention actions, and make data-backed decisions using both traditional analytics and generative AI.
 
 ## Basic Information
 **Names:** N M Emran Hussain  
@@ -10,9 +10,9 @@ Analyze Titanic passenger data with Logistic Regression &amp; Random Forest. Ide
 **License:** [Apache License Version 2.0,](LICENSE)
 
 ## Intended Use
-**Purpose:** The model predicts survival on the Titanic dataset using various machine learning algorithms.  
-**Intended Users:** Data Analysts, Data scientists, machine learning enthusiasts, educators.  
-**Out-of-scope Uses:** The model is not intended for production use in any critical applications or real-time decision-making systems.
+**Purpose:** This project transforms raw e-commerce data into a decision-ready system by engineering customer behavior features, predicting churn risk, and evaluating retention strategies. It combines descriptive analytics, predictive modeling, and a Retrieval-Augmented Generation (RAG) layer, enabling users to query insights in natural language, all grounded in real customer data.
+**Intended Users:** Marketing and CRM teams, Product and Growth Managers, Data Analysts and Data Scientists, and Business leaders and decision-makers.  
+**Out-of-scope Uses:** Operational users, Real-time transaction processing systems, End consumers / shoppers, Users expecting real-time personalization at scale, and Teams seeking compliance, fraud detection, or financial auditing solutions.
 
 ## Training Data
 **Dataset Name:** Titanic Training Data  
