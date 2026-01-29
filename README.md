@@ -186,11 +186,11 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 
 **Description**: This visual validates how well the model's assigned Low Risk tiers correspond to actual churn behavior, using appropriate colors and labels.
 
-![Recency vs. Churn Probability by Risk Tier Plot](Recency vs. Churn Probability by Risk Tier.jpg) 
+![Recency vs. Churn Probability by Risk Tier Plot](rcp.jpg) 
 
 **Description**: This visual illustrates the relationship between how recently a customer purchased and their predicted churn probability across different risk segments, using a color palette to distinguish tiers and adding clear axis labels.
 
-![Policy Reward Matrix Heatmap](Policy Reward Matrix Heatmap.jpg) 
+![Policy Reward Matrix Heatmap](prmh.jpg) 
 
 **Description**: This visualization is clearly highlight the most financially beneficial retention actions for each customer segment based on the ROI analysis, with annotations for EV values.
 
