@@ -93,10 +93,7 @@ This training data was used to fit a Logistic Regression model (with feature sca
 - **Text Splitting Technology:** LangChain
 - **RAG Workflow:** Embedding Model: models/gemini-embedding-001.
 - **Generative Model:** models/gemini-2.5-flash.
-
-- Knowledge Base Construction:
-- **Source 1:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings.
-- **Source 2:** Technical documentation and code snippets extracted directly from the processing notebook (E-commerce_1_1.ipynb).
+- **Knowledge Base Construction:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings. Technical documentation and code snippets extracted directly from the processing notebook (E-commerce_1_1.ipynb).
 - **Vector Indexing:** Recursive character splitting into 1,000-character chunks with 200-character overlap for context preservation.
 - **Retrieval Mechanism:** Persistent ChromaDB store using cosine similarity of embeddings.
 
