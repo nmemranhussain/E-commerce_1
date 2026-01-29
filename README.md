@@ -82,29 +82,41 @@ This training data was used to fit a Logistic Regression model (with feature sca
 | Logistic Regression | 0.723  | 0.529 | 0.763 | 0.625 |
 | Random Forest| 0.704 | 0.559 | 0.442 | 0.494 |
 
-### Retention Policy (ROI Analysis):
+### Feature Importance
+**Monetary value** and **Frequency** are the strongest predictors of lower churn probability (negative coefficients). **Recency** is the strongest predictor of higher churn probability (positive coefficient). The Logisitic Regression Coefficients are given below:  
 
+|Feature|Coefficient|Importance|
+|-------|-----------|----------|
+|Monetary|	-1.31	|1.31|
+|Frequency|	-1.14	|1.14|
+|Recency|	0.27	|0.27|
+|AvgBasketSpend	|0.08	|0.08|
+|ReturnRate	|-0.03|	0.03|
+
+
+### Retention Policy (ROI Analysis):
 - **Highest ROI Action:** 'call+coupon' (Average Reward: $3.74).
 - **Lowest ROI Action:** 'email' (Average Reward: $0.00).
 
-### Model & Rag Architecture & Programming
+### Model & Rag Architecture & Programming (With Version)
 - **Feature Engineering:** Conversion of raw transactional data into aggregated customer profiles including diversity of products purchased and weekend shopping flags.
-- **Vector Database:** ChromaDB for persistent storage and retrieval of semantic embeddings.
-- **Text Splitting Technology:** LangChain
+- **Vector Database:** ChromaDB (Version 0.6.3)for persistent storage and retrieval of semantic embeddings.
+- **Text Splitting Technology:** LangChain (Version 0.3.5)
 - **RAG Workflow:** Embedding Model: models/gemini-embedding-001.
 - **Generative Model:** models/gemini-2.5-flash.
 - **Knowledge Base Construction:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings. Technical documentation and code snippets extracted directly from the processing notebook (E-commerce_1_1.ipynb).
 - **Vector Indexing:** Recursive character splitting into 1,000-character chunks with 200-character overlap for context preservation.
 - **Retrieval Mechanism:** Persistent ChromaDB store using cosine similarity of embeddings.
 
-
 ### Version of the Modeling Software: 
-- **'pandas'**: '2.2.2',
-- **'scikit-learn'**: '1.4.2',
-- **'seaborn'**: '0.13.2',
-- **'matplotlib'**: '3.8.4**
+- **pandas:** '3.1.2',
+- **Numpy:** 1.26.4
+- **Scikit-learn:** '1.5.2',
+- **Seaborn:** '0.13.2',
+- **Matplotlib:** 3.10.0,
+- **Streamlit:**	1.52.1
 
-### Hyperparameters or Other Settings of the Model
+##
 
 
 The following hyperparameters were used for the 'random forest' as an alternative model:
