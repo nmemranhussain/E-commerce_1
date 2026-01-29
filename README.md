@@ -166,12 +166,33 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 - **High-Risk customers** are **best targeted with sms+coupon (highest EV)**. **Medium-Risk customers** respond best to **sms**. **Low-Risk customers** should primarily receive **sms** or **email** (minimal cost, small positive EV).
   
 ### Plots
+![Plot of ROC Curve for Churn Model:](ROC.jpg) 
 
+**Description**: ROC curve for the Logistic Regression & Random Forest model on the holdout set to visually represent its discriminative power and performance in distinguishing between churning and active customers.
 
+![Plot of Feature Importance](Feature.jpg) 
+
+**Description**: This horizontal bar chart is displaying the absolute coefficient values for each feature from the Logistic Regression model, sorted in descending order of importance. 
+
+![Plot of Observed Churn Rate by High Risk Tier](High.jpg) 
+
+**Description**: This visual validates how well the model's assigned High Risk tiers correspond to actual churn behavior, using appropriate colors and labels.
+
+![Plot of Observed Churn Rate by Middeum Risk Tier](Medium.jpg) 
+
+**Description**: This visual validates how well the model's assigned Medium Risk tiers correspond to actual churn behavior, using appropriate colors and labels.
  
-![Plot of Survival Rate Vs. Passenger Class](SR_by_Class.png) 
+![Plot of Observed Churn Rate by Low Risk Tier](Low.jpg) 
 
-**Description**: Passengers in 1st class had the highest survival rate, followed by those in 2nd class. 3rd class passengers had the lowest survival rate.
+**Description**: This visual validates how well the model's assigned Low Risk tiers correspond to actual churn behavior, using appropriate colors and labels.
+
+![Recency vs. Churn Probability by Risk Tier Plot](Recency vs. Churn Probability by Risk Tier.jpg) 
+
+**Description**: This visual illustrates the relationship between how recently a customer purchased and their predicted churn probability across different risk segments, using a color palette to distinguish tiers and adding clear axis labels.
+
+![Policy Reward Matrix Heatmap](Policy Reward Matrix Heatmap.jpg) 
+
+**Description**: This visualization is clearly highlight the most financially beneficial retention actions for each customer segment based on the ROI analysis, with annotations for EV values.
 
 ## Limitation, Biases & Future Work
 
