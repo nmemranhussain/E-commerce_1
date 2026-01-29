@@ -77,9 +77,9 @@ The knowledge base for this RAG system is constructed from the following primary
 - **Recommendation Engine:** Contextual Bandit (LinUCB) for personalized retention actions.
 - **Conversational Layer:** Retrieval-Augmented Generation (RAG) using Gemini-2.5-flash and Gemini-embedding-001.
   
-### Model Training Methodology
+### Chunrning Model Training Methodology
 
-This training data was used to fit a Logistic Regression model (with feature scaling) and a Random Forest classifier. Both models utilized balanced class weights to further account for the imbalance in the training labels.
+This training data was used to fit a **Logistic Regression** model (with feature scaling) and a **Random Forest** classifier. Both models utilized balanced class weights to further account for the imbalance in the training labels.
 
 ### Evaluation Metrics  
 - **Churn Prediction:** AUC, Precision, Recall, and F1-score (calculated using stratified test sets).
