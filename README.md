@@ -10,11 +10,12 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 **License:** [Apache License Version 2.0,](LICENSE)
 
 ## Intended Use
-**Purpose:** This project transforms raw e-commerce data into a decision-ready system by engineering customer behavior features, predicting churn risk, and evaluating retention strategies. It combines descriptive analytics, predictive modeling, and a Retrieval-Augmented Generation (RAG) layer, enabling users to query insights in natural language, all grounded in real customer data.  
+**Purpose:** This project transforms raw e-commerce data into a decision-ready system by engineering customer behavior features, predicting churn risk, and evaluating retention strategies. It combines descriptive analytics, predictive modeling, and a Retrieval-Augmented Generation (RAG) layer, enabling users to query insights in natural language, all grounded in real customer data. The purpose of this RAG (Retrieval-Augmented Generation) system is to provide intelligent, context-grounded answers to user queries regarding E-commerce customer data and retention policies. It aims to assist users in understanding customer behavior (RFM), recommended retention actions, and overall policy summaries by leveraging a knowledge base built from various E-commerce datasets and the notebook's content.  
 **Intended Users:** Marketing and CRM teams, Product and Growth Managers, Data Analysts and Data Scientists, and Business leaders and decision-makers.  
 **Out-of-scope Uses:** Operational users, Real-time transaction processing systems, End consumers / shoppers, Users expecting real-time personalization at scale, and Teams seeking compliance, fraud detection, or financial auditing solutions.  
 
-## Business Problem & Solution
+
+### Business Problem & Solution
 **Business Problem:** Reducing Chunging rate, Improving ROI  
 **Business Solution:** Understading Dataset, Modeling & RAG, Optimization (Customer Segmentation & EV), ROI Improvement, Future opportunity.
 
@@ -59,6 +60,15 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 **Training Data Percentage:** 70% of the customer-level dataset (the RFM data) was used as training data.  
 **Testing Data Percentage:** The remaining 30% was reserved as a holdout test set to evaluate model performance.
 
+### **RAG Data Types Processed:** The knowledge base for this RAG system is constructed from the following primary data files and content:
+- **`rfm.xls`:**Contains Recency, Frequency, and Monetary (RFM) metrics for customers.
+- **`contextual_policy_recommendations.xls`:** Provides specific retention action recommendations and estimated rewards for individual customers.
+- **`contextual_policy_summary.xls`:** Offers a summary of retention policies, including average ROI and customer volume per action.
+- **`contextual_policy_tier_action_mix.xls`:** Details the mix of actions per policy tier (not directly used for document generation but part of initial load).
+- **`Online_retail_cleaned.xls`:** The cleaned online retail transactional data (not directly used for document generation but assumed context for analysis).
+- **`E-commerce_1_1.ipynb`:** The entire content of the Jupyter/Colab notebook, which includes code, markdown explanations, and outputs, providing context on the system's development and rationale.
+- **`merged_customer_profiles.csv`:** A derived dataset combining RFM metrics with contextual policy recommendations for each customer.
+
 ## Modeling Details
 
 ### Model Type
@@ -93,15 +103,17 @@ This training data was used to fit a Logistic Regression model (with feature sca
 |AvgBasketSpend	|0.08	|0.08|
 |ReturnRate	|-0.03|	0.03|
 
-### Model & Rag Architecture & Programming (With Version)
-- **Feature Engineering:** Conversion of raw transactional data into aggregated customer profiles including diversity of products purchased and weekend shopping flags.
+### Model & Rag System Architecture (With Version)
+- **Feature Engineering:** Conversion of raw transactional data into aggregated customer profiles including diversity of products purchased and weekend shopping flags.- 
 - **Vector Database:** ChromaDB (Version 0.6.3)for persistent storage and retrieval of semantic embeddings.
 - **Text Splitting Technology:** LangChain (Version 0.3.5)
 - **RAG Workflow:** Embedding Model: models/gemini-embedding-001.
 - **Generative Model:** models/gemini-2.5-flash.
-- **Knowledge Base Construction:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings. Technical documentation and code snippets extracted directly from the processing notebook (E-commerce_1_1.ipynb).
+- **Knowledge Base Construction:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings. Technical documentation and code snippets extracted directly from the processing notebook.
 - **Vector Indexing:** Recursive character splitting into 1,000-character chunks with 200-character overlap for context preservation.
 - **Retrieval Mechanism:** Persistent ChromaDB store using cosine similarity of embeddings.
+- **Functionality & Usage of RAG Chatbot:** The RAG Chatbot operates as an interactive analytics system that processes natural language queries by first converting them into vector embeddings via the gemini-embedding-001 model. These embeddings allow the system to perform a semantic search within a **ChromaDB vector store**, retrieving the most relevant context chunks from the e-commerce knowledge base. By dynamically merging this retrieved context with expert system instructions and the user’s original question, the chatbot constructs an augmented prompt for the **gemini-2.5-flash model** to generate a concise, fact-grounded response. This workflow is managed through a continuous conversational loop initiated by the **start_chatbot_session()** function, which maintains the interactive session until the user explicitly exits.
+
 
 ### Version of the Modeling Software: 
 - **pandas:** '3.1.2',
@@ -111,7 +123,7 @@ This training data was used to fit a Logistic Regression model (with feature sca
 - **Matplotlib:** 3.10.0,
 - **Streamlit:**	1.52.1
 
-## Optimization 
+## Optimization & Quantitative Analysis
 ### Customer Segmentation
 Customers are segmented into three risk tiers based on predicted churn probability (Churn_Prob):
 - **High Risk:** Churn_Prob ≥ 0.60
@@ -119,8 +131,6 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 - **Low Risk:** Churn_Prob < 0.40
 
 ### Summary of Tiers (from churn_risk_tier_dashboard.csv):
-
-
 
 |Risk_Tier	|Customers	|Avg_Prob	|Actual_ChurnRate	|Recency	|Frequency	|Monetary	|AvgBasketSpend	|ReturnRate	|Portfolio_%|
 |-----------|-----------|---------|-----------------|---------|-----------|---------|---------------|-----------|-----------|
@@ -132,8 +142,8 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 
 ### Optimal Action Mix by Total EV (from risk_action.csv):
 
-- **Highest ROI Action:** 'call+coupon' (Average Reward: $3.74).
-- **Lowest ROI Action:** 'email' (Average Reward: $0.00).
+- **Highest ROI Action:** 'call+coupon' (Average Reward: $6.23).
+- **Lowest ROI Action:** 'email' (Average Reward: $0.03).
 
 |Action	|Customers	|Total_Cost	|Total_IncGM	|Total_EV	|Avg_EV|
 |-------|-----------|-----------|-------------|---------|-------|
@@ -142,17 +152,23 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 |call+coupon	|27	|102.60	|270.88	|168.28	|6.23|
 |email	|70	|0.70	|3.14	|2.44	|0.03|
 
+- **Optimal Strategy per Tier (Policy Reward Matrix - Average EV by Tier and Action):**
+
+|Action \ Tier	|High Risk	|Medium Risk	|Low Risk|
+|---------------|-----------|-------------|--------|
+|call+coupon	|4.96	|3.55	|0.71|
+|sms+coupon	|4.96	|3.55	|0.71|
+|sms	|4.96	|3.55	|0.71|
+|email	|0.03	|0.03	|0.03|
+
 - **sms+coupon** and **sms** are the primary drivers of **positive EV**, targeting the largest number of customers.**call+coupon** yields the highest Avg_EV per customer (£6.23) but is applied to a **small, high-value segment**. Targeting **High and Medium risk tiers is most profitable**.
 - **High-Risk customers** are **best targeted with sms+coupon (highest EV)**. **Medium-Risk customers** respond best to **sms**. **Low-Risk customers** should primarily receive **sms** or **email** (minimal cost, small positive EV).
   
-## Quantitative Analysis
-
 ### Plots Related to Data or Final Model
  
 ![Plot of Survival Rate Vs. Passenger Class](SR_by_Class.png) 
 
 **Description**: Passengers in 1st class had the highest survival rate, followed by those in 2nd class. 3rd class passengers had the lowest survival rate.
-
 
 ## Limitation, Biases & Future Work
 
@@ -162,7 +178,11 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 - **Generalizability:** Model trained on a single dataset; performance might vary with different customer bases or industries.
 - **Feature Completeness:** Only RFM and derived features are used; external factors (e.g., marketing spend, competitor actions, customer service interactions) are not included.
 - **Model Simplification:** Logistic Regression is a linear model and may not capture highly complex non-linear relationships, though it performs well here.
-_ **Cost/Uplift Estimates:** The ROI simulation relies on estimated costs, redemption rates, and uplift values, which should be validated with real-world A/B testing.
+- **Cost/Uplift Estimates:** The ROI simulation relies on estimated costs, redemption rates, and uplift values, which should be validated with real-world A/B testing.
+- **Strict Context Adherence**: The chatbot is designed to answer questions strictly based on the provided CONTEXT. It will not use external knowledge or make assumptions beyond what is explicitly present in the indexed documents. This ensures factual consistency but may limit its ability to answer very broad or unrepresented questions.
+- **Absence of External Knowledge**: The system does not access real-time data or information outside of its pre-indexed knowledge base. Therefore, its responses are limited to the information captured at the time of knowledge base creation.
+- **Impact of Chunking Strategy**: The effectiveness of retrieval is influenced by the `RecursiveCharacterTextSplitter`'s `chunk_size` (1000 characters) and `chunk_overlap` (200 characters). While designed to maintain comprehensive context, very long or complex information spanning across multiple non-overlapping chunks might be less optimally retrieved. Queries requiring synthesis of information across widely separated chunks could be challenging.
+- **Data Freshness**: The accuracy of answers related to RFM metrics or policy recommendations depends on the freshness of the `rfm.xls` and `contextual_policy_recommendations.xls` datasets. If underlying customer data changes, the model card will need to be updated.
 
 ### Future Work
 - **Model Retraining:** Regularly retrain the model with fresh data to capture evolving customer behavior.
@@ -171,5 +191,7 @@ _ **Cost/Uplift Estimates:** The ROI simulation relies on estimated costs, redem
 - **A/B Testing:** Conduct controlled experiments to validate the estimated costs and effectiveness of retention actions.
 - **Advanced Modeling:** Investigate more complex models (e.g., XGBoost, neural networks) if performance gains justify the increased complexity and interpretability challenges.
 - **LinUCB Tuning:** Tune the alpha parameter and refine reward engineering for the contextual bandit to achieve a more balanced and cost-effective marketing mix.
+- **Improvement of 'hallucinations':** The current RAG system design effectively prevents **hallucinations** by strictly confining the chatbot's knowledge to its indexed data, making it a reliable tool for grounded information retrieval within its defined scope.
+- **Robut Chunking Strategy:** Future enhancements could explore adaptive chunking strategies or semantic chunking to improve context retrieval for more complex queries and expand the knowledge base with real-time or more diverse E-commerce-specific content to increase its utility.
 
 
