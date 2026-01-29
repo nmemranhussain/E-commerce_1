@@ -59,7 +59,7 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 **Training Data Percentage:** 70% of the customer-level dataset (the RFM data) was used as training data.  
 **Testing Data Percentage:** The remaining 30% was reserved as a holdout test set to evaluate model performance.
 
-## Modeling & RAG Details
+## Modeling Details
 
 ### Model Type
 - **Churn Classifier:** Logistic Regression and Random Forest.
