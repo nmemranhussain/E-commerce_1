@@ -62,7 +62,7 @@ This project builds an end-to-end e-commerce analytics and AI-driven decision su
 
 ### **RAG Data Types Processed:** 
 The knowledge base for this RAG system is constructed from the following primary data files and content:
-- **`rfm.xls`:**Contains Recency, Frequency, and Monetary (RFM) metrics for customers.
+- **`rfm.xls`:** Contains Recency, Frequency, and Monetary (RFM) metrics for customers.
 - **`contextual_policy_recommendations.xls`:** Provides specific retention action recommendations and estimated rewards for individual customers.
 - **`contextual_policy_summary.xls`:** Offers a summary of retention policies, including average ROI and customer volume per action.
 - **`contextual_policy_tier_action_mix.xls`:** Details the mix of actions per policy tier (not directly used for document generation but part of initial load).
