@@ -255,8 +255,8 @@ graph TD
 ### AI Disclosure & Collaboration
 - **Model Development:** Generative AI was utilized for code optimization, specifically in debugging the matrix inversions within the LinUCB contextual bandit and refining the ChromaDB batching logic.
 - **Documentation & Peer Review:** AI acted as a technical editor for this Model Card to ensure that the ROI metrics and RAG architecture are presented with professional clarity and industry-standard terminology.
-- **Grounded Generation (Safety):** The integrated chatbot uses Gemini 1.5 Flash constrained by a strict "System Instruction." It is designed for Grounded Generation, meaning it is technically prohibited from accessing external knowledge or "hallucinating" purchase histories not present in the indexed RFM documents.
-- **AI Collaboration:** This project serves as a capstone of my MSBA journey at GWU. While I authored the core logic and architecture, I utilized Gemini 1.5 Pro as a "Pair Programmer" to optimize the LinUCB matrix calculations and ensure the documentation met professional narrative standards.
+- **Grounded Generation (Safety):** The integrated chatbot uses Gemini 2.0 Flash constrained by a strict "System Instruction." It is designed for Grounded Generation, meaning it is technically prohibited from accessing external knowledge or "hallucinating" purchase histories not present in the indexed RFM documents.
+- **AI Collaboration:** This project serves as a capstone of my MSBA journey at GWU. While I authored the core logic and architecture, I utilized Gemini 2.0 Pro as a "Pair Programmer" to optimize the LinUCB matrix calculations and ensure the documentation met professional narrative standards.
 
 ### Future Work & Scalability
 - **A/B Validation:** The current ROI simulation serves as a "Prescriptive Baseline." Future iterations will involve a controlled A/B test to validate estimated redemption rates.
