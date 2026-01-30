@@ -190,6 +190,22 @@ Expected Value = (P(Conversion) * Marginal Revenue) - Cost of Action (Where P(Co
 - **Low-Risk:** Maintain Passive Monitoring via email to ensure zero-cost touchpoints without cannibalizing existing high-value revenue.
   
 ### Plots
+
+graph TD
+    A[UCI Retail Data] --> B(Feature Engineering: RFM)
+    B --> C{Churn Classifier: LogReg}
+    C -->|AUC: 0.723| D[Churn Risk Tiers: High/Med/Low]
+    D --> E[(ChromaDB: Vector Store)]
+    B --> E
+    E --> F[RAG Engine: Semantic Search]
+    G[LinUCB Bandit Optimization] --> F
+    F --> H[Gemini 1.5 Flash]
+    H --> I[Personalized Retention Offer]
+    I -.->|Reward Signal| G
+    style H fill:#dcfce7,stroke:#166534
+    style G fill:#fff2e6,stroke:#ea580c
+    style E fill:#e6f2ff,stroke:#1e40af
+
 ![Plot of ROC Curve for Churn Model:](ROC.jpg) 
 
 **Description**: ROC curve for the Logistic Regression & Random Forest model on the holdout set to visually represent its discriminative power and performance in distinguishing between churning and active customers.
