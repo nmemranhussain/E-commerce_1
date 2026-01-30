@@ -148,8 +148,9 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 
 ## ROI Improvement
 
-ROI Calculation Framework:The Expected Value (EV) and ROI for each customer-action pair are calculated as:
-Expected Value = (P(Conversion) * Marginal Revenue) - Cost of Action (Where P(Conversion) is the uplift probability predicted by the model stack.)
+- ROI Calculation Framework:  
+The Expected Value (EV) and ROI for each customer-action pair are calculated as:  
+Expected Value = (P(Conversion) * Marginal Revenue) - Cost of Action (Where P(Conversion) is the uplift probability predicted by the model stack.)  
 
 ### Optimal Action Mix by Total EV (from risk_action.csv):
 
