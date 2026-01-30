@@ -1,4 +1,4 @@
-# E-commerce Churn Prevention System
+# Integrated E-Commerce Analytics: Predictive Churn & Contextual RAG Recommender
 
 This project builds an end-to-end e-commerce analytics and AI-driven decision support system. It converts raw transaction data into customer-level insights using feature engineering and churn modeling, evaluates retention strategies through expected value analysis, and enables natural-language access to insights via a Retrieval-Augmented Generation (RAG) interface. The system helps business teams identify at-risk customers, prioritize retention actions, and make data-backed decisions using both traditional analytics and generative AI.
 
@@ -92,6 +92,14 @@ This training data was used to fit a **Logistic Regression** model (with feature
 |-------------|-------|-----------|--------|--------|
 | Logistic Regression | 0.723  | 0.529 | 0.763 | 0.625 |
 | Random Forest| 0.704 | 0.559 | 0.442 | 0.494 |
+
+![ROC-AUC Curve](RA.jpg) 
+
+**Description**: The ROC curve shows how well a binary classifier distinguishes between classes by plotting True Positive Rate against False Positive Rate across different thresholds. The AUC summarizes this performance, where 1 indicates perfect classification and 0.5 indicates random guessing.
+
+![Precision-Recall Curve](PR.jpg) 
+
+**Description**: The Precision–Recall curve evaluates model performance by plotting precision against recall across thresholds and is especially useful for imbalanced datasets. It focuses on how well the model identifies the positive class while minimizing false positives, making it valuable for tasks like churn prediction.
 
 - **Higher Discriminative Power:** Logistic Regression achieved an AUC of $0.723$, outperforming the Random Forest ($0.704$). This indicates a better overall ability to distinguish between customers who will churn and those who will stay.
 - **Superior Recall for Churn Identification:** A critical finding is the Recall of $0.763$ for Logistic Regression compared to only $0.442$ for Random Forest. In a churn context, a higher recall is vital as it means the model successfully identifies 76.3% of actual churners, allowing the marketing team to intervene before they leave.
