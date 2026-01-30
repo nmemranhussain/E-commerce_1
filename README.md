@@ -154,7 +154,7 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 
 - **Quantitative Insight:** The Low Risk tier accounts for only 30% of the portfolio but generates the highest Monetary value ($2,316.73 avg). Conversely, the High Risk tier shows a churn rate of 58.2%, identifying them as the primary targets for the high-cost call+coupon interventions.
 
-## ROI Improvement
+## ## Business Value & ROI Optimization
 
 - ROI Calculation Framework:  
 The Expected Value (EV) and ROI for each customer-action pair are calculated as:  
