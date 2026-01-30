@@ -75,7 +75,7 @@ The knowledge base for this RAG system is constructed from the following primary
 ### Model Type
 - **Churn Classifier:** Logistic Regression and Random Forest.
 - **Recommendation Engine:** Contextual Bandit (LinUCB) for personalized retention actions.
-- **Conversational Layer:** Retrieval-Augmented Generation (RAG) using Gemini-2.5-flash and Gemini-embedding-001.
+- **Conversational Layer:** Retrieval-Augmented Generation (RAG) using Gemini-2.0-flash and Gemini-embedding-001.
   
 ### Chunrning Model Training Methodology
 
@@ -112,13 +112,13 @@ This training data was used to fit a **Logistic Regression** model (with feature
 ### Model & Rag System Architecture (With Version)
 - **Feature Engineering:** Conversion of raw transactional data into aggregated customer profiles including diversity of products purchased and weekend shopping flags.- 
 - **Vector Database:** ChromaDB (Version 0.6.3)for persistent storage and retrieval of semantic embeddings.
-- **Text Splitting Technology:** LangChain (Version 0.3.5)
+- **Text Splitting Technology:** LangChain (Version 0.3.x)
 - **RAG Workflow:** Embedding Model: models/gemini-embedding-001.
-- **Generative Model:** models/gemini-2.5-flash.
-- **Knowledge Base Construction:** Structured customer profiles (RFM + Predicted Policy) converted to natural language strings. Technical documentation and code snippets extracted directly from the processing notebook.
-- **Vector Indexing:** Recursive character splitting into 1,000-character chunks with 200-character overlap for context preservation.
+- **Generative Model:** models/gemini-2.0-flash.
+- **Knowledge Base Construction:** Data Linearization of structured customer profiles (RFM + Predicted Policy) into natural language narratives to maximize the semantic capture of the Gemini embedding model.
+- **Vector Indexing:** Documents are partitioned into 1,000-character chunks with a 20-percent (200-char) overlap. This strategy ensures that high-density RFM metrics remain contextually linked during vector retrieval.
 - **Retrieval Mechanism:** Persistent ChromaDB store using cosine similarity of embeddings.
-- **Functionality & Usage of RAG Chatbot:** The RAG Chatbot operates as an interactive analytics system that processes natural language queries by first converting them into vector embeddings via the gemini-embedding-001 model. These embeddings allow the system to perform a semantic search within a **ChromaDB vector store**, retrieving the most relevant context chunks from the e-commerce knowledge base. By dynamically merging this retrieved context with expert system instructions and the user’s original question, the chatbot constructs an augmented prompt for the **gemini-2.5-flash model** to generate a concise, fact-grounded response. This workflow is managed through a continuous conversational loop initiated by the **start_chatbot_session()** function, which maintains the interactive session until the user explicitly exits.
+- **Functionality & Usage of RAG Chatbot:** The RAG Chatbot operates as an interactive analytics system that processes natural language queries by first converting them into vector embeddings via the gemini-embedding-001 model. These embeddings allow the system to perform a semantic search within a **ChromaDB vector store**, retrieving the most relevant context chunks from the e-commerce knowledge base. By dynamically merging this retrieved context with expert system instructions and the user’s original question, the chatbot constructs an augmented prompt for the **gemini-2.5-flash model** to generate a concise, fact-grounded response. This workflow is managed through a continuous conversational loop initiated by the **start_chatbot_session()** function, which maintains the interactive session until the user explicitly exits. The system utilizes 'Grounded Generation'—by strictly constraining the LLM to the retrieved ChromaDB context, we minimize the risk of 'hallucinations' regarding customer purchase history or invalid discount offers.
 
 
 ### Version of the Modeling Software: 
@@ -144,7 +144,12 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 |Medium	|969	|0.514	|0.369	|47.953	|32.301	|523.030	|20.461	|0.023	|35.0|
 |Low	|832	|0.211	|0.141	|27.035	|133.429	|2316.738	|21.072	|0.025	|30.0|
 
+- **Quantitative Insight:** The Low Risk tier accounts for only 30% of the portfolio but generates the highest Monetary value ($2,316.73 avg). Conversely, the High Risk tier shows a churn rate of 58.2%, identifying them as the primary targets for the high-cost call+coupon interventions.
+
 ## ROI Improvement
+
+ROI Calculation Framework:The Expected Value (EV) and ROI for each customer-action pair are calculated as:
+Expected Value = (P(Conversion) * Marginal Revenue) - Cost of Action (Where P(Conversion) is the uplift probability predicted by the model stack.)
 
 ### Optimal Action Mix by Total EV (from risk_action.csv):
 
@@ -158,7 +163,9 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 |call+coupon	|27	|102.60	|270.88	|168.28	|6.23|
 |email	|70	|0.70	|3.14	|2.44	|0.03|
 
-- **Optimal Strategy per Tier (Policy Reward Matrix - Average EV by Tier and Action):**
+- Optimal Policy Matrix (Targeting Logic): This matrix represents the reinforcement learning (LinUCB) reward signals used to select the optimal intervention per segment.
+- **Cost-Efficiency of SMS:** While call+coupon provides the highest individual Avg_EV ($6.23), it is labor-intensive. The SMS+Coupon strategy is the primary revenue driver because it balances a high conversion uplift with a low execution cost, resulting in the highest Total EV ($4,630.69).
+- **Tier-Based Optimization:** The model identifies a clear "Profitability Threshold." High-Risk customers justify the $1.85 cost of a coupon, whereas Low-Risk customers are only profitable via "low-touch" channels like Email or SMS, where the margin isn't eroded by incentive costs.
 
 |Action \ Tier	|High Risk	|Medium Risk	|Low Risk|
 |---------------|-----------|-------------|--------|
@@ -167,8 +174,11 @@ Customers are segmented into three risk tiers based on predicted churn probabili
 |sms	|4.96	|3.55	|0.71|
 |email	|0.03	|0.03	|0.03|
 
-- **sms+coupon** and **sms** are the primary drivers of **positive EV**, targeting the largest number of customers.**call+coupon** yields the highest Avg_EV per customer (£6.23) but is applied to a **small, high-value segment**. Targeting **High and Medium risk tiers is most profitable**.
-- **High-Risk customers** are **best targeted with sms+coupon (highest EV)**. **Medium-Risk customers** respond best to **sms**. **Low-Risk customers** should primarily receive **sms** or **email** (minimal cost, small positive EV).
+- **Scalability:** While call+coupon offers the highest individual Avg_EV ($6.23), it is restricted to a niche high-value segment. SMS+Coupon serves as the primary engine for revenue recovery, contributing $4,630.69 in total EV due to its superior scalability across the Medium and High-risk tiers.
+- **Profitability Thresholds:** High-risk customers justify higher acquisition costs ($1.85/coupon), whereas Low-risk customers are managed through high-margin, low-touch channels (Email/SMS) to prevent "margin erosion."
+- **High-Risk:** Prioritize Incentivized Outreach (sms+coupon) to mitigate the 58% churn probability.
+- **Medium-Risk:** Deploy Engagement-Focused (sms) tactics; this tier represents the best balance of recovery potential vs. cost.
+- **Low-Risk:** Maintain Passive Monitoring via email to ensure zero-cost touchpoints without cannibalizing existing high-value revenue.
   
 ### Plots
 ![Plot of ROC Curve for Churn Model:](ROC.jpg) 
