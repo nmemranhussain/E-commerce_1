@@ -210,28 +210,24 @@ Expected Value = (P(Conversion) * Marginal Revenue) - Cost of Action (Where P(Co
 
 **Description**: This visualization is clearly highlight the most financially beneficial retention actions for each customer segment based on the ROI analysis, with annotations for EV values.
 
-## Limitation, Biases & Future Work
 
-### Limitations and Biases
-- **Data Timeliness:** Based on data from 2010-2011; customer behavior patterns may have evolved.
-- **Churn Definition:** A 90-day inactivity window might not be universally applicable.
-- **Generalizability:** Model trained on a single dataset; performance might vary with different customer bases or industries.
-- **Feature Completeness:** Only RFM and derived features are used; external factors (e.g., marketing spend, competitor actions, customer service interactions) are not included.
-- **Model Simplification:** Logistic Regression is a linear model and may not capture highly complex non-linear relationships, though it performs well here.
-- **Cost/Uplift Estimates:** The ROI simulation relies on estimated costs, redemption rates, and uplift values, which should be validated with real-world A/B testing.
-- **Strict Context Adherence**: The chatbot is designed to answer questions strictly based on the provided CONTEXT. It will not use external knowledge or make assumptions beyond what is explicitly present in the indexed documents. This ensures factual consistency but may limit its ability to answer very broad or unrepresented questions.
-- **Absence of External Knowledge**: The system does not access real-time data or information outside of its pre-indexed knowledge base. Therefore, its responses are limited to the information captured at the time of knowledge base creation.
-- **Impact of Chunking Strategy**: The effectiveness of retrieval is influenced by the `RecursiveCharacterTextSplitter`'s `chunk_size` (1000 characters) and `chunk_overlap` (200 characters). While designed to maintain comprehensive context, very long or complex information spanning across multiple non-overlapping chunks might be less optimally retrieved. Queries requiring synthesis of information across widely separated chunks could be challenging.
-- **Data Freshness**: The accuracy of answers related to RFM metrics or policy recommendations depends on the freshness of the `rfm.xls` and `contextual_policy_recommendations.xls` datasets. If underlying customer data changes, the model card will need to be updated.
+## Limitations, Biases & Ethical Considerations
 
-### Future Work
-- **Model Retraining:** Regularly retrain the model with fresh data to capture evolving customer behavior.
-- **Feature Expansion:** Incorporate more granular data (e.g., product categories, website activity, customer support interactions) for richer context.
-- **Dynamic Churn Definition:** Explore adaptive churn definitions based on product lifecycle or customer segments.
-- **A/B Testing:** Conduct controlled experiments to validate the estimated costs and effectiveness of retention actions.
-- **Advanced Modeling:** Investigate more complex models (e.g., XGBoost, neural networks) if performance gains justify the increased complexity and interpretability challenges.
-- **LinUCB Tuning:** Tune the alpha parameter and refine reward engineering for the contextual bandit to achieve a more balanced and cost-effective marketing mix.
-- **Improvement of 'hallucinations':** The current RAG system design effectively prevents **hallucinations** by strictly confining the chatbot's knowledge to its indexed data, making it a reliable tool for grounded information retrieval within its defined scope.
-- **Robut Chunking Strategy:** Future enhancements could explore adaptive chunking strategies or semantic chunking to improve context retrieval for more complex queries and expand the knowledge base with real-time or more diverse E-commerce-specific content to increase its utility.
+### Technical & Data Limitations
 
+- **Temporal Decay:** The underlying dataset (2010-2011) reflects historical consumer patterns. While mathematically sound, the model’s efficacy in a 2026 e-commerce environment would require retraining on modern, high-velocity transactional data.
+- **Feature Sparsity:** The current feature space is restricted to RFM (Recency, Frequency, Monetary) variables. The absence of external signals—such as marketing spend, competitor price fluctuations, and customer service sentiment—means the model operates in a closed-world environment.
+- **Heuristic Churn Definition:** The 90-day inactivity threshold is a fixed heuristic. In practice, churn is dynamic; an adaptive window based on product lifecycle (e.g., fast-moving consumer goods vs. durables) would yield higher precision.
+- **Retrieval Granularity:** The RAG system utilizes a fixed Recursive Character Splitting strategy ($1,000$ characters, $200$ overlap). While robust for individual persona lookup, complex queries requiring the synthesis of information across widely separated data chunks may face retrieval "bottlenecks."
 
+### AI Disclosure & Collaboration
+- **Model Development:** Generative AI was utilized for code optimization, specifically in debugging the matrix inversions within the LinUCB contextual bandit and refining the ChromaDB batching logic.
+- **Documentation & Peer Review:** AI acted as a technical editor for this Model Card to ensure that the ROI metrics and RAG architecture are presented with professional clarity and industry-standard terminology.
+
+- **Grounded Generation (Safety):** The integrated chatbot uses Gemini 1.5 Flash constrained by a strict "System Instruction." It is designed for Grounded Generation, meaning it is technically prohibited from accessing external knowledge or "hallucinating" purchase histories not present in the indexed RFM documents.
+
+### Future Work & Scalability
+- **A/B Validation:** The current ROI simulation serves as a "Prescriptive Baseline." Future iterations will involve a controlled A/B test to validate estimated redemption rates.
+- **Advanced Architecture:** We aim to explore Semantic Chunking—splitting data based on logical customer shifts rather than character counts—to improve the RAG system's nuance.
+- **Dynamic Reward Engineering:** Currently, the LinUCB alpha parameter is static. Future work involves tuning the exploration-exploitation trade-off (alpha) dynamically based on real-time campaign performance.
+- **Feature Expansion:** Integrating website clickstream data and product-level taxonomy to transition from "Segment-Level" to "Item-Level" recommendations.
